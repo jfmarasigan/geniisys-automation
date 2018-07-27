@@ -23,6 +23,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.geniisys.automation.common.exception.BrowserDriverException;
 import com.google.common.io.Files;
 
 public final class BrowserDriver implements WebDriver {
@@ -68,8 +69,7 @@ public final class BrowserDriver implements WebDriver {
 			System.setProperty("webdriver.gecko.driver", geckoDriverPath);
 			return new FirefoxDriver();
 		} catch (Exception e) {
-			LOGGER.error("Could not create Firefox driver.");
-			throw new RuntimeException("Could not create Firefox driver.");
+			throw new BrowserDriverException("Could not create Firefox driver.", e);
 		}
 	}
 
@@ -83,8 +83,7 @@ public final class BrowserDriver implements WebDriver {
 			System.setProperty("webdriver.chrome.driver", chromeDriverPath);
 			return new ChromeDriver();
 		} catch (Exception e) {
-			LOGGER.error("Could not create Chrome driver.");
-			throw new RuntimeException("Could not create Chrome driver.");
+			throw new BrowserDriverException("Could not create Chrome driver.", e);
 		}
 	}
 

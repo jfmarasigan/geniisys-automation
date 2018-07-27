@@ -1,5 +1,9 @@
 package com.geniisys.automation.common;
 
+import java.time.Month;
+import java.time.format.TextStyle;
+import java.util.Locale;
+
 import org.openqa.selenium.By;
 
 import ru.yandex.qatools.htmlelements.element.Select;
@@ -7,8 +11,8 @@ import ru.yandex.qatools.htmlelements.element.Select;
 public class DatePicker {
 	
 	private BrowserDriver driver;
-	private final By MONTH_LOV_LOCATOR = By.xpath("//select[@id='scwMonths']");
-	private final By YEAR_LOV_LOCATOR = By.xpath("//select[@id='scwYears']");
+	private static final By MONTH_LOV_LOCATOR = By.xpath("//select[@id='scwMonths']");
+	private static final By YEAR_LOV_LOCATOR = By.xpath("//select[@id='scwYears']");
 	
 	public DatePicker(BrowserDriver driver) {
 		this.driver = driver;
@@ -37,7 +41,7 @@ public class DatePicker {
 		driver.findElement(By.xpath("//td[@class='scwCells'"
 				+ " and contains(text(), '"
 				+ day
-				+ "')]")).click();;
+				+ "')]")).click();
 	}
 	
 	private String extractYear(String date) {
@@ -46,51 +50,11 @@ public class DatePicker {
 	
 	private String extractMonth(String date) {
 		Integer month = Integer.valueOf(date.substring(0, 2));
-		String monthString = null;
-		
-		switch (month) {
-		case 1:
-			monthString = "Jan";
-			break;
-		case 2:
-			monthString = "Feb";
-			break;
-		case 3:
-			monthString = "Mar";
-			break;
-		case 4:
-			monthString = "Apr";
-			break;
-		case 5:
-			monthString = "May";
-			break;
-		case 6:
-			monthString = "Jun";
-			break;
-		case 7:
-			monthString = "Jul";
-			break;
-		case 8:
-			monthString = "Aug";
-			break;
-		case 9:
-			monthString = "Sep";
-			break;
-		case 10:
-			monthString = "Oct";
-			break;
-		case 11:
-			monthString = "Nov";
-			break;
-		case 12:
-			monthString = "Dec";
-			break;
-		}
-		return monthString;
+		return Month.of(month).getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
 	}
 	
 	private Integer extractDay(String date) {
-		return  Integer.valueOf(date.substring(3, 5));
+		return Integer.valueOf(date.substring(3, 5));
 	}
  
 }
